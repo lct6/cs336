@@ -1,0 +1,14 @@
+{
+  "name": "myapp",
+  "version": "1.0.0",
+  "description": "",
+  "main": "lab03.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Lisa",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.14.0"
+  }
+}
