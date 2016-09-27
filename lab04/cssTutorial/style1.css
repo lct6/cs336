@@ -1,0 +1,56 @@
+/* Lisa Terwilliger
+    Lab04  */
+
+/* rule: make all text in the body 16px in the Comic Sans MS font. Use cursive if previous
+         is not installed on viewer's browser  */
+body {
+font: 16px "Comic Sans MS", cursive;
+background: url("Blue-rule.png");
+}
+
+strong {   background-color: #ddf; /* pale blue */
+           color: #f00; /* red */
+           font: 200% serif;
+}
+
+/* IDs */
+#first { font-style: italic; }
+#second { color: blue; }
+
+/*classes*/
+.carrot { color: #fa0; /* orange */ } 
+.spinach { 
+	color: #080; /* dark green */
+	background-color: #ddf;
+} 
+
+/* elements */
+p:before{
+  content: url("yellow-pin.png");
+}
+p { color: #00f; /* blue */ }
+
+
+
+
+
+
+/*  earlier steps that are no longer needed:
+p {color: blue;}
+strong {color: red; text-decoration: underline;}*/
+
+/*a.homepage:link, a.homepage:visited {
+  padding: 1px 10px 1px 10px;
+  color: #fff;
+  background: #555;
+  border-radius: 3px;
+  border: 1px outset rgba(50,50,50,.5);
+  font-family: georgia, serif;
+  font-size: 14px;
+  font-style: italic;
+  text-decoration: none;
+}
+
+a.homepage:hover, a.homepage:focus, a.homepage:active {
+  background-color: #666;
+}*/
