@@ -27,11 +27,16 @@ var Ken = new person("Ken", "Doe", "kd456", "1973/07/21");
 
 var people = [Jane, Ken];
 
-function printPerson(person){
-	var mes = person.firstName + " " + person.lastName + ", ID: " + person.loginID + 
-				", started on: " + person.startDate;
-	return mes;
+//get a person given an ID
+function getPerson(id){
+	for (i = 0; i < people.length; i++){
+		if(id == people[i].loginID){
+			return people[i];
+		}
+	}
+
 }
+
 
 //years function
 function getYears(person) {
@@ -52,39 +57,19 @@ app.get('/people', function(req, res) {
 
 //the full record for the person with the given ID
 app.get('/person/:loginID', function(req, res) {
-	if(req.params.loginID == "jd123"){
-		res.json({"Person" : printPerson(Jane) });
-	}
-	else if(req.params.loginID == "kd456"){
-		res.json({"Person" : printPerson(Ken) });
-	} else {
-		res.sendStatus(404);
-	}
+	res.json({"person" : getPerson(req.params)});
 });
 
 //the full name (i.e., first & last) for the person with the given ID
 app.get('/person/:loginID/name', function(req, res) {
-  	if(req.params.loginID == "jd123"){
-		res.json({"Name" : Jane.fullName});
-	}
-	else if(req.params.loginID == "kd456"){
-		res.json({"Name" : Ken.fullName});
-	} else {
-		res.sendStatus(404);
-	}
+
 });
 
 
 //the seniority (i.e., number of years with the organization) of the person with the given ID
 app.get('/person/:loginID/years', function(req, res) {
-  	if(req.params.loginID == "jd123"){
-		res.json({"Years" : getYears(Jane) });
-	}
-	else if(req.params.loginID == "kd456"){
-		res.json({"Years" : getYears(Ken) });
-	} else {
-		res.sendStatus(404);
-	}
+
+
 });
 
 
