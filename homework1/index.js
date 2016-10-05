@@ -4,9 +4,9 @@
 var express = require('express');
 var app = express();
 
-// respond with "hello world" when a GET request is made to the homepage
+// respond with greeting
 app.get('/', function(req, res) {
-   res.json({"message" : "Hello World"});
+   res.json("Hello! to look at all people in the organization type /people in the URL");
 });
 
 app.listen(3000, function () {
@@ -17,24 +17,31 @@ app.listen(3000, function () {
 function person(firstName, lastName, loginID, startDate) {
 	this.firstName = firstName;
 	this.lastName = lastName;
+	this.fullName = firstName + " " + lastName;
 	this.loginID = loginID;
 	this.startDate = new Date(startDate);
-	this.fullName = firstName + " " + lastName;
+	
 }
 
+//hard code the people
 var Jane = new person("Jane", "Doe", "jd123", "1975/05/06");
 var Ken = new person("Ken", "Doe", "kd456", "1973/07/21");
+var Moe = new person("Moe", "Howard", "mh111", "1997/06/19");
+var Curly = new person("Curly", "Howard", "ch222", "2003/10/22");
+var Larry = new person("Larry", "Fine", "lf333", "2002/10/05");
 
-var people = [Jane, Ken];
+//add them to a list
+var peopleList = [Jane, Ken, Moe, Curly, Larry];
 
-//get a person given an ID
+//get a person given an ID if not found return null
 function getPerson(id){
-	for (i = 0; i < people.length; i++){
-		if(id == people[i].loginID){
-			return people[i];
+	for (i = 0; i < peopleList.length; i++){
+		if(peopleList[i].loginID == id){
+			return peopleList[i];
 		}
 	}
 
+	return null;
 }
 
 
@@ -50,25 +57,37 @@ function getYears(person) {
     return years;
 }
 
-//a list of all people objects
+//Displays a list of all people objects
 app.get('/people', function(req, res) {
-  res.json({"people" : people});
+  res.json(peopleList);
 });
 
-//the full record for the person with the given ID
+//Displays the full record for the person with the given ID
 app.get('/person/:loginID', function(req, res) {
-	res.json({"person" : getPerson(req.params)});
+	if(getPerson(req.params.loginID) != null){
+		res.json(getPerson(req.params.loginID));
+	} else{
+		res.sendStatus(404);
+	}
 });
 
-//the full name (i.e., first & last) for the person with the given ID
+//Displays the full name (i.e., first & last) for the person with the given ID
 app.get('/person/:loginID/name', function(req, res) {
-
+	if(getPerson(req.params.loginID) != null){
+		res.json(getPerson(req.params.loginID).fullName);
+	}else{
+		res.sendStatus(404);
+	}
 });
 
 
-//the seniority (i.e., number of years with the organization) of the person with the given ID
+//Displays the seniority (i.e., number of years with the organization) of the person with the given ID
 app.get('/person/:loginID/years', function(req, res) {
-
+	if(getPerson(req.params.loginID) != null){
+		res.json(getYears(getPerson(req.params.loginID)));
+	} else {
+		res.sendStatus(404);
+	}
 
 });
 
