@@ -1,0 +1,75 @@
+    /* Lisa Terwilliger lab05
+
+       Vaiables for DRY goals */
+        mini = 0px
+        black = #000000
+
+
+    body 
+        font: 24px Helvetica
+        background: #999999
+
+
+    #main 
+        min-height: 800px
+        margin: mini
+        padding: mini
+        border: 1px solid black
+        display: flex
+        flex-flow: row
+    article                 /* Nesting for the DRY goals: article, nav, aside */
+        margin: mini
+        padding: 20px
+        border: 1.5px solid black
+        background: #dddd88
+        flex: 3 1 60%
+        order: 2
+    nav                    
+        text-align: right
+        font: 18px Arial
+        margin: mini
+        padding: 15px
+        border: 1.5px solid black
+        background: #ccccff
+        flex: 1 6 20%
+        order: 1
+    aside 
+        font: 22px cursive
+        margin: mini
+        padding: 15px
+        border: 1.5px solid black
+        background: #ccccff
+        flex: 1 6 20%
+        order: 3
+    
+ 
+    header, footer 
+        font: 20px "Arial Black"
+        display: block
+        margin: mini
+        padding: 15px
+        min-height: 100px
+        border: 1px solid black
+        background: #ffeebb
+    
+ 
+    /* Too narrow to support three columns */
+    @media all and (max-width: 640px) 
+        #main, #page 
+            flex-direction: column
+        
+
+        #main > article, #main > nav, #main > aside 
+        /* Return them to document order */
+            order: 0
+        
+  
+        #main > nav, #main > aside, header, footer 
+            min-height: 50px
+            max-height: 100px
+        
+
+        #main > nav 
+            text-align: left
+        
+    

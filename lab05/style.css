@@ -1,0 +1,74 @@
+/* Lisa Terwilliger lab05
+
+       Vaiables for DRY goals */
+body {
+  font: 24px Helvetica;
+  background: #999;
+}
+#main {
+  min-height: 800px;
+  margin: 0px;
+  padding: 0px;
+  border: 1px solid #000;
+  display: flex;
+  flex-flow: row;
+}
+article {
+  margin: 0px;
+  padding: 20px;
+  border: 1.5px solid #000;
+  background: #dd8;
+  flex: 3 1 60%;
+  order: 2;
+}
+nav {
+  text-align: right;
+  font: 18px Arial;
+  margin: 0px;
+  padding: 15px;
+  border: 1.5px solid #000;
+  background: #ccf;
+  flex: 1 6 20%;
+  order: 1;
+}
+aside {
+  font: 22px cursive;
+  margin: 0px;
+  padding: 15px;
+  border: 1.5px solid #000;
+  background: #ccf;
+  flex: 1 6 20%;
+  order: 3;
+}
+header,
+footer {
+  font: 20px "Arial Black";
+  display: block;
+  margin: 0px;
+  padding: 15px;
+  min-height: 100px;
+  border: 1px solid #000;
+  background: #feb;
+}
+/* Too narrow to support three columns */
+@media all and (max-width: 640px) {
+  #main,
+  #page {
+    flex-direction: column;
+  }
+  #main > article,
+  #main > nav,
+  #main > aside {
+    order: 0;
+  }
+  #main > nav,
+  #main > aside,
+  header,
+  footer {
+    min-height: 50px;
+    max-height: 100px;
+  }
+  #main > nav {
+    text-align: left;
+  }
+}
