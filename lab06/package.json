@@ -1,0 +1,11 @@
+{
+  "name": "lab06",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "start": "kill $(pgrep node) ; node server.js &"
+  },
+  "author": "Lisa",
+  "license": "ISC"
+}
