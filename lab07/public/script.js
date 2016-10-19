@@ -4,25 +4,17 @@ $( document ).ready(function() {
 
 //button widget
 $( function() {
-    $( "button, input, a" ).click( function( event ) {
-      event.preventDefault();
-      $( "<p> That was fun!</p>" ).insertAfter( "button" );
-    } );
-  } );
-
-
-});
- 
-
-// Using the core $.ajax() method
+    $( "button, input, a" ).click( 
+      function( event ) {
+        // Using the core $.ajax() method
 $.ajax({
  
     // The URL for the request
-    url: "lab7.html",
+    url: "/hello",
  
     // The data to send (will be converted to a query string)
     data: {
-        id: 123
+        name : "lab7"
     },
  
     // Whether this is a POST or GET request
@@ -33,9 +25,9 @@ $.ajax({
 })
   // Code to run if the request succeeds (is done);
   // The response is passed to the function
-  .done(function( json ) {
-     $( "<h1>" ).text( json.title ).appendTo( "body" );
-     $( "<div class=\"content\">").html( json.html ).appendTo( "body" );
+  .done(function( json_string ) {
+     const json = JSON.parse(json_string)
+          $( "body" ).append("<p>" + json.message + "</p>")
 
      $( "<p> AJAX is cool</p>" ).insertAfter( "button" );
   })
@@ -51,3 +43,12 @@ $.ajax({
   .always(function( xhr, status ) {
     alert( "The request is complete!" );
   });
+      //event.preventDefault();
+      //$( "<p> That was fun!</p>" ).insertAfter( "button" );
+    } );
+  } );
+
+
+});
+ 
+
