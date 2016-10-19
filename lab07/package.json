@@ -1,0 +1,11 @@
+{
+  "name": "lab07",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "kill $(pgrep node) ; nodemon --ignore public/ server.js &"
+  },
+  "author": "Lisa",
+  "license": "ISC"
+}

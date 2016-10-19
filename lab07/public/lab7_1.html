@@ -1,0 +1,67 @@
+<!doctype html>
+<!-- Lisa Terwilliger
+     Lab07   -->
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Demo</title>
+    <style>
+a.test {
+    font-weight: bold;
+}
+</style>
+</head>
+<body>
+    <a href="http://jquery.com/">jQuery</a>
+    <script src="jquery.js"></script>
+    <script>
+ 
+$( document ).ready(function() {
+ //Launching Code on Document Ready
+    $( "a" ).click(function( event ) {
+ 
+        alert( "As you can see, the link no longer took you to jquery.com" );
+ 
+        event.preventDefault();
+ 
+    });
+//Adding and Removing an HTML Class
+    $( "a" ).addClass( "test" );
+    $( "a" ).removeClass( "test" );
+
+//Special Effects
+    $( "a" ).click(function( event ) {
+ 
+    event.preventDefault();
+ 
+    $( this ).hide( "slow" );
+    });
+
+//Callbacks and Functions
+//Callback without Arguments
+$.get( "myhtmlpage.html", myCallBack );
+
+//link Callback with Arguments
+$.get( "myhtmlpage.html", function() {
+ 
+    myCallBack( param1, param2 );
+ 
+});
+ 
+
+
+
+});
+ 
+    </script>
+
+    <p>I would like to say: </p>
+ 
+<script>
+//adding a new element
+$( "p" ).append( "<strong>Hello</strong>" );
+$( "p" ).append( "<p>New elements</p>" );
+</script>
+
+</body>
+</html>
