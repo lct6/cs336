@@ -1,4 +1,5 @@
-
+//Lisa Terwilliger
+//Lab07
  
 $( document ).ready(function() {
 
@@ -25,11 +26,10 @@ $.ajax({
 })
   // Code to run if the request succeeds (is done);
   // The response is passed to the function
-  .done(function( json_string ) {
-     const json = JSON.parse(json_string)
-          $( "body" ).append("<p>" + json.message + "</p>")
+  .done(function( result ) {
+          //console.log('AJAX request succeeded...');
+          $("body").append("<p>" + result.message + "</p>");
 
-     $( "<p> AJAX is cool</p>" ).insertAfter( "button" );
   })
   // Code to run if the request fails; the raw request and
   // status codes are passed to the function
@@ -41,8 +41,9 @@ $.ajax({
   })
   // Code to run regardless of success or failure;
   .always(function( xhr, status ) {
-    alert( "The request is complete!" );
+    alert( "The request is complete and this is an annoying pop-up saying so!" );
   });
+      //exercise 7.2 
       //event.preventDefault();
       //$( "<p> That was fun!</p>" ).insertAfter( "button" );
     } );
