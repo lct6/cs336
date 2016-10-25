@@ -1,5 +1,10 @@
 //Lisa Terwilliger
 //Homework 2
+/*
+    I tried to implement this using a file to store the people like 
+    we did in lab 8. This probably ended up being more complemented
+    than intended.
+*/
 
 var fs = require('fs');
 var path = require('path');
@@ -24,7 +29,7 @@ app.listen(3000, function () {
   console.log('Example app listening on port 3000!');
 });
 
-
+//person *Homework 1
 function person(firstName, lastName, loginID, startDate) {
 	this.firstName = firstName;
 	this.lastName = lastName;
@@ -34,7 +39,7 @@ function person(firstName, lastName, loginID, startDate) {
 	
 }
 
-//hard code the people
+//hard code the people *Homework 1
 var Jane = new person("Jane", "Doe", "jd123", "1975/05/06");
 var Ken = new person("Ken", "Doe", "kd456", "1973/07/21");
 var Moe = new person("Moe", "Howard", "mh111", "1997/06/19");
@@ -56,10 +61,10 @@ function getPerson(id){
 }
 
 
-//years function
-function getYears(person) {
+//years function Updated
+function getYears(date) {
     var today = new Date();
-    var startDate = new Date(person.startDate);
+    var startDate = date;
     var years = today.getFullYear() - startDate.getFullYear();
     var m = today.getMonth() - startDate.getMonth();
     if (m < 0 || (m === 0 && today.getDate() < startDate.getDate())) {
@@ -70,32 +75,72 @@ function getYears(person) {
 
 
 
-//Displays the full record for the person with the given ID
-app.get('/person/:loginID', function(req, res) {
-	if(getPerson(req.params.loginID) != null){
-		res.json(getPerson(req.params.loginID));
-	} else{
-		res.sendStatus(404);
-	}
-});
+
 
 //Displays the full name (i.e., first & last) for the person with the given ID
+//updated
 app.get('/person/:loginID/name', function(req, res) {
-	if(getPerson(req.params.loginID) != null){
-		res.json(getPerson(req.params.loginID).fullName);
-	}else{
-		res.sendStatus(404);
-	}
+	fs.readFile(COMMENTS_FILE, function(err, data) {
+        if (err) {
+            console.error(err);
+            process.exit(1);
+        }
+        var comments = JSON.parse(data);
+
+
+        var person = null;
+
+        for (i = 0; i < comments.length; i++){
+            //console.log(i);
+            //console.log(comments[i].loginID);
+            
+            if(comments[i].loginID == req.params.loginID){
+                 person = comments[i];
+            }
+        }
+        //send the info if found otherwise send not found
+        if(person != null){
+            res.send({firstName: person.firstName, 
+                     lastName: person.lastName
+            });
+        }else{
+            res.sendStatus(404);
+        }
+    });
 });
 
 
 //Displays the seniority (i.e., number of years with the organization) of the person with the given ID
+//updated
 app.get('/person/:loginID/years', function(req, res) {
-	if(getPerson(req.params.loginID) != null){
-		res.json(getYears(getPerson(req.params.loginID)));
-	} else {
-		res.sendStatus(404);
-	}
+    fs.readFile(COMMENTS_FILE, function(err, data) {
+        if (err) {
+            console.error(err);
+            process.exit(1);
+        }
+        var comments = JSON.parse(data);
+
+
+        var person = null;
+
+        for (i = 0; i < comments.length; i++){
+            //console.log(i);
+            //console.log(comments[i].startDate);
+            
+            if(comments[i].loginID == req.params.loginID){
+                 person = comments[i];
+            }
+        }
+
+    if(person != null){
+        stDate = new Date(person.startDate);
+        res.json(getYears(stDate));
+    } else {
+        res.sendStatus(404);
+    }
+    
+
+    });
 
 });
 
@@ -162,6 +207,7 @@ app.post('/forms', function (req, res) {
                 console.error(err);
                 process.exit(1);
             }
+            res.status(HttpStatus.OK)
             res.send('First Name: ' + "  " + req.body.user_firstName + '<br>' +
   		'Last Name: ' + "  " + req.body.user_lastName + '<br>' +
   		'ID: ' + "  " + req.body.user_id + '<br>' +
@@ -169,14 +215,6 @@ app.post('/forms', function (req, res) {
   			);;
         });
     });
-
- /*res
-  .status(HttpStatus.OK)
-  .send('First Name: ' + "  " + req.body.user_firstName + '<br>' +
-  		'Last Name: ' + "  " + req.body.user_lastName + '<br>' +
-  		'ID: ' + "  " + req.body.user_id + '<br>' +
-  		'Start Date: ' + "  " + req.body.user_startDate + "<br>"
-  			);*/
 
 });
 
@@ -217,5 +255,231 @@ app.get('/getID', function (req, res) {
 	});
 });
 
+
+//Displays the full record for the person with the given ID 
+//*Homework 2 update: This should allow you to get, update or delete person records identified by the given ID.
+app.get('/person/:loginID', function(req, res) {
+    fs.readFile(COMMENTS_FILE, function(err, data) {
+        if (err) {
+            console.error(err);
+            process.exit(1);
+        }
+        var comments = JSON.parse(data);
+        var person = null;
+
+        for (i = 0; i < comments.length; i++){
+            //console.log(i);
+            //console.log(comments[i].loginID);
+            
+            if(comments[i].loginID == req.params.loginID){
+                 person = comments[i];
+            }
+        }
+        //send the info if found otherwise send not found
+        if(person != null){
+            res.send({firstName: person.firstName, 
+                     lastName: person.lastName,
+                     ID: person.loginID,
+                     startDate: person.startDate
+            });
+        }else{
+            res.sendStatus(404);
+        }
+    });
+});
+
+//delete
+app.delete('/person/:loginID', function(req, res) {
+    fs.readFile(COMMENTS_FILE, function(err, data) {
+        if (err) {
+            console.error(err);
+            process.exit(1);
+        }
+        var comments = JSON.parse(data);
+
+        var people = [];
+
+        console.log(req.params.loginID);
+
+        for (i = 0; i < comments.length; i++){
+            //console.log(i);
+            //console.log(comments[i].loginID);
+            
+            if(comments[i].loginID == req.params.loginID){
+               // console.log("person skipped");
+            }else {
+                people.push(comments[i]);
+            }
+        }
+
+        fs.writeFile(COMMENTS_FILE, JSON.stringify(people, null, 4), function(err) {
+            if (err) {
+                console.error(err);
+                process.exit(1);
+            }
+        });
+        //send the info if found otherwise send not found
+
+            res.send("person Deleted");
+
+    });
+});
+
+//update -> translating as post
+app.post('/person/:loginID', function(req, res) {
+    fs.readFile(COMMENTS_FILE, function(err, data) {
+        if (err) {
+            console.error(err);
+            process.exit(1);
+        }
+        var comments = JSON.parse(data);
+        var people = [];
+        var fName = "";
+        var lName = "";
+        var lID = "";
+        var sDate = "";
+
+
+       // console.log(req.body.firstName);
+
+        for (i = 0; i < comments.length; i++){
+           // console.log(i);
+           // console.log(comments[i].loginID);
+            
+            if(comments[i].loginID == req.params.loginID){
+                //first name
+               if(req.body.firstName != null){
+                fName = (req.body.firstName);
+               } else {
+                fName = (comments[i].firstName);
+               }
+
+               //last name
+               if(req.body.lastName != null){
+                lName = (req.body.lastName);
+               } else {
+                lName = (comments[i].lastName);
+               }
+
+               //login id
+               if(req.body.loginID != null){
+                lID = (req.body.loginID);
+               } else {
+                lID = (comments[i].loginID);
+               }
+
+               //start date
+               if(req.body.startDate != null){
+                sDate = (req.body.startDate);
+               } else {
+                sDate = (comments[i].startDate);
+               }
+
+            var updatePerson = {
+            firstName: fName,
+            lastName: lName,
+            loginID: lID,
+            startDate: sDate,
+        };
+
+          //  console.log("updating Person");
+            people.push(updatePerson);
+
+            }else {
+                people.push(comments[i]);
+            }
+        }
+
+       // console.log(people);
+
+        fs.writeFile(COMMENTS_FILE, JSON.stringify(people, null, 4), function(err) {
+            if (err) {
+                console.error(err);
+                process.exit(1);
+            }
+        });
+        
+    res.send("person updated");
+    });
+});
+
+//same thing for put
+app.put('/person/:loginID', function(req, res) {
+    fs.readFile(COMMENTS_FILE, function(err, data) {
+        if (err) {
+            console.error(err);
+            process.exit(1);
+        }
+        var comments = JSON.parse(data);
+        var people = [];
+        var fName = "";
+        var lName = "";
+        var lID = "";
+        var sDate = "";
+
+
+        //console.log(req.body.firstName);
+
+        for (i = 0; i < comments.length; i++){
+           // console.log(i);
+            //console.log(comments[i].loginID);
+            
+            if(comments[i].loginID == req.params.loginID){
+                //first name
+               if(req.body.firstName != null){
+                fName = (req.body.firstName);
+               } else {
+                fName = (comments[i].firstName);
+               }
+
+               //last name
+               if(req.body.lastName != null){
+                lName = (req.body.lastName);
+               } else {
+                lName = (comments[i].lastName);
+               }
+
+               //login id
+               if(req.body.loginID != null){
+                lID = (req.body.loginID);
+               } else {
+                lID = (comments[i].loginID);
+               }
+
+               //start date
+               if(req.body.startDate != null){
+                sDate = (req.body.startDate);
+               } else {
+                sDate = (comments[i].startDate);
+               }
+
+            var updatePerson = {
+            firstName: fName,
+            lastName: lName,
+            loginID: lID,
+            startDate: sDate,
+        };
+
+          //  console.log("updating Person");
+            people.push(updatePerson);
+
+            }else {
+                people.push(comments[i]);
+            }
+        }
+
+       // console.log(people);
+
+        fs.writeFile(COMMENTS_FILE, JSON.stringify(people, null, 4), function(err) {
+            if (err) {
+                console.error(err);
+                process.exit(1);
+            }
+        });
+        
+        res.send("person Updated");
+    
+    });
+});
 
 
