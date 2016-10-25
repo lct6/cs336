@@ -1,0 +1,56 @@
+[
+    {
+        "firstName": "bob",
+        "lastName": "Jones",
+        "loginID": "bj33",
+        "startDate": "1999-03-12"
+    },
+    {
+        "firstName": "billy",
+        "lastName": "Kid",
+        "loginID": "bk11",
+        "startDate": "1999-03-12"
+    },
+    {
+        "firstName": "billy jo",
+        "lastName": "fern",
+        "loginID": "bjf4",
+        "startDate": "2001-04-29"
+    },
+    {
+        "firstName": "harold",
+        "lastName": "green",
+        "loginID": "hg45",
+        "startDate": "1970-08-14"
+    },
+    {
+        "firstName": "fred",
+        "lastName": "flinstone",
+        "loginID": "ff22",
+        "startDate": "2013-11-12"
+    },
+    {
+        "firstName": "wendy",
+        "lastName": "doll",
+        "loginID": "wd99",
+        "startDate": "1987-02-28"
+    },
+    {
+        "firstName": "george",
+        "lastName": "smith",
+        "loginID": "gs12",
+        "startDate": "2005-01-30"
+    },
+    {
+        "firstName": "will",
+        "lastName": "robinson",
+        "loginID": "wr1",
+        "startDate": "1997-09-01"
+    },
+    {
+        "firstName": "judy",
+        "lastName": "robinson",
+        "loginID": "jr22",
+        "startDate": "1997-09-01"
+    }
+]
