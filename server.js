@@ -23,7 +23,7 @@ var db;
 //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 //              Remember to mask password!
 //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-MongoClient.connect('mongodb://cs336:<PASSWORD>@ds041939.mlab.com:41939/cs336_lct6', function (err, dbConnection) {
+MongoClient.connect('mongodb://cs336:bjarne@ds041939.mlab.com:41939/cs336_lct6', function (err, dbConnection) {
   if (err) throw err
 
    db = dbConnection; 
