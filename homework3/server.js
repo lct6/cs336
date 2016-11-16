@@ -1,12 +1,13 @@
 //Lisa Terwilliger
-//Homework 3
-
-
+/*Homework 3
+	An mLab-based, MongoDB backend for your person data.
+    A React frontend that allows the user to see a list of people and add a person.
+*/
 var fs = require('fs');
 var path = require('path');
 var express = require('express');
 var app = express();
-var HttpStatus = require('http-status-codes');
+
 const bodyParser = require('body-parser')
 
 
@@ -23,7 +24,8 @@ MongoClient.connect('mongodb://cs336:<PASSWORD>@ds041939.mlab.com:41939/cs336_lc
    db = dbConnection; 
 })
 
- 
+ app.set('port', (process.env.PORT || 3000));
+
 app.use('/', express.static(path.join(__dirname, 'dist')));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
@@ -34,9 +36,6 @@ app.get('/', function(req, res) {
    res.json("Hello! to look at all people in the organization type /people in the URL");
 });
 
-app.listen(3000, function () {
-  console.log('Example app listening on port 3000!');
-});
 
 
 
@@ -72,15 +71,15 @@ app.use(function(req, res, next) {
 
 
 //sends that data to the server to be added to the in-memory database
-app.post('/pepole', function (req, res) {
+app.post('/people', function (req, res) {
 
-     var newComment = {
+     var newPerson = {
         firstName: req.body.firstName,
         lastName: req.body.lastName,
         loginID: req.body.loginID,
         startDate: req.body.startDate,
     };
-    db.collection("people").insertOne(newComment, function(err, result) {
+    db.collection("people").insertOne(newPerson, function(err, result) {
         if (err) throw err;
         var newId = result.insertedId;
         db.collection("people").find({}).toArray(function(err, docs) {
@@ -93,6 +92,7 @@ app.post('/pepole', function (req, res) {
 
 
 
-
-
+app.listen(app.get('port'), function() {
+    console.log('Server started: http://localhost:' + app.get('port') + '/');
+});
 

@@ -21,14 +21,14 @@ module.exports = React.createClass({
   },
    handleSubmit: function(e) {
     e.preventDefault();
-    var firstName = this.state.firstName.trim();
-    var lastName = this.state.lastName.trim();
-    var loginID = this.state.loginID.trim();
-    var startDate = this.state.startDate.trim();
-    if (!text || !author) {
+    var first = this.state.firstName.trim();
+    var last = this.state.lastName.trim();
+    var login = this.state.loginID.trim();
+    var start = this.state.startDate.trim();
+    if (!first || !last || !login || !start) {
       return;
     }
-    this.props.onPersonSubmit({firstName: firstName, lastName: lastName, loginID: loginID, startDate: startDate});
+    this.props.onPersonSubmit({firstName: first, lastName: last, loginID: login, startDate: start});
     this.setState({firstName: '', lastName: '', loginID: '', startDate: ''});
   },
   render: function() {
@@ -59,7 +59,7 @@ module.exports = React.createClass({
           onChange={this.handleStartDateChange}
         />
 
-        <input type="submit" value="Post" />
+        <input type="submit" value="post" />
       </form>
     );
   }
