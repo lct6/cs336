@@ -2,6 +2,9 @@
 /*Homework 3
 	An mLab-based, MongoDB backend for your person data.
     A React frontend that allows the user to see a list of people and add a person.
+
+    I couldn't get the front end to have the form on the same page as the comments... 
+    So I kept it seperate.
 */
 var fs = require('fs');
 var path = require('path');
@@ -33,19 +36,8 @@ app.use(express.static('dist'));
 
 // respond with greeting
 app.get('/', function(req, res) {
-   res.json("Hello! to look at all people in the organization type /people in the URL");
+   res.json("Hello! to look at all people in the organization type /people in the URL. Add a person by typing /personForm.html in the URL");
 });
-
-
-
-
-
-//-----------------------------------------------------------------------------------------------
-//***********************************************************************************************
-//************************************** FOR HW 3************************************************
-//***********************************************************************************************
-//-----------------------------------------------------------------------------------------------
-
 
 
 
