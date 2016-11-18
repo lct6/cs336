@@ -28,7 +28,7 @@ module.exports = React.createClass({
     if (!first || !last || !login || !start) {
       return;
     }
-    this.props.onPersonSubmit({firstName: first, lastName: last, loginID: login, startDate: start});
+    this.props.onCommentSubmit({firstName: first, lastName: last, loginID: login, startDate: start});
     this.setState({firstName: '', lastName: '', loginID: '', startDate: ''});
   },
   render: function() {

@@ -1,16 +1,18 @@
 //Lisa Terwilliger
-//homework 3
+//Lab08
+
+//Lab09
 
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import personBox from './personBox';
+import CommentBox from './commentBox';
 
 import '../css/base.css';
 
 
 
 ReactDOM.render(
-  <personBox url="/people" pollInterval={2000} />,
+  <CommentBox url="/api/comments" pollInterval={2000} />,
   document.getElementById('content')
 );

@@ -1,18 +1,20 @@
-//Lisa Terwilliger
-/*Homework 3
-	An mLab-based, MongoDB backend for your person data.
-    A React frontend that allows the user to see a list of people and add a person.
+/**
+ * This file provided by Facebook is for non-commercial testing and evaluation
+ * purposes only. Facebook reserves all rights not expressly granted.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
+ * FACEBOOK BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN
+ * ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+ * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ */
 
-    I couldn't get the front end to have the form on the same page as the comments... 
-    So I kept it seperate.
-*/
 var fs = require('fs');
 var path = require('path');
 var express = require('express');
+var bodyParser = require('body-parser');
 var app = express();
-
-const bodyParser = require('body-parser')
-
 
 //lab 10
 var MongoClient = require('mongodb').MongoClient
@@ -21,34 +23,19 @@ var db;
 //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 //              Remember to mask password!
 //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-MongoClient.connect('mongodb://cs336:<PASSWORD>@ds041939.mlab.com:41939/cs336_lct6', function (err, dbConnection) {
+MongoClient.connect('mongodb://cs336:bjarne@ds041939.mlab.com:41939/cs336_lct6', function (err, dbConnection) {
   if (err) throw err
 
    db = dbConnection; 
 })
 
- app.set('port', (process.env.PORT || 3000));
+var COMMENTS_FILE = path.join(__dirname, 'comments.json');
+
+app.set('port', (process.env.PORT || 3000));
 
 app.use('/', express.static(path.join(__dirname, 'dist')));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
-app.use(express.static('dist'));
-
-// respond with greeting
-app.get('/', function(req, res) {
-   res.json("Hello! to look at all people in the organization type /people in the URL. Add a person by typing /personForm.html in the URL");
-});
-
-
-
-//Displays a list of all people objects 
-app.get('/people', function(req, res) {
-db.collection("people").find({}).toArray(function(err, docs) {
-        if (err) throw err;
-        res.json(docs);
-    });
-});
-
 
 // Additional middleware which will set headers that we need on each request.
 app.use(function(req, res, next) {
@@ -61,11 +48,15 @@ app.use(function(req, res, next) {
     next();
 });
 
+app.get('/api/comments', function(req, res) {
+   db.collection("people").find({}).toArray(function(err, docs) {
+        if (err) throw err;
+        res.json(docs);
+    });
+});
 
-//sends that data to the server to be added to the in-memory database
-app.post('/people', function (req, res) {
-
-     var newPerson = {
+app.post('/api/comments', function(req, res) {
+   var newPerson = {
         firstName: req.body.firstName,
         lastName: req.body.lastName,
         loginID: req.body.loginID,
@@ -79,12 +70,9 @@ app.post('/people', function (req, res) {
             res.json(docs);
         });
     });
-
 });
-
 
 
 app.listen(app.get('port'), function() {
     console.log('Server started: http://localhost:' + app.get('port') + '/');
 });
-
